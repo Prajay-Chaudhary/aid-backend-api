@@ -1,4 +1,5 @@
 class RequestsController < ApplicationController
+  #before_action :authenticate_user!, except: [:index, :show]
   before_action :set_request, only: %i[ show update destroy ]
 
   # GET /requests
