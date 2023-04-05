@@ -1,6 +1,7 @@
 class Request < ApplicationRecord
   Limit = 5
   belongs_to :user
+  has_many_attached :images
 
 
 
@@ -27,7 +28,7 @@ class Request < ApplicationRecord
   validates :description, presence: true
   validates :address, presence: true
   validates :description ,presence: true,length: {maximum: 300},on: :create, allow_nil: false
-
+  validates :images, presence: false, blob: { content_type: ['image/png', 'image/jpg', 'image/jpeg'], size_range: 1..(5.megabytes) }
 
   geocoded_by :address  # can also be an IP address
   reverse_geocoded_by :latitude, :longitude
