@@ -2,6 +2,7 @@ class User < ApplicationRecord
   before_save { self.email = email.downcase }
   has_many :requests , dependent: :destroy
   has_many_attached :files
+  has_many :fulfillments, dependent: :destroy
 
   include Devise::JWT::RevocationStrategies::JTIMatcher
 

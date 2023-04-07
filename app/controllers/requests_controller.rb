@@ -29,7 +29,7 @@ class RequestsController < ApplicationController
     if @request.save
       render json: @request, status: :created #, location: @request
     else
-      render json: @request.errors.full_messages.to_sentence, status: 422
+      render json: @request.errors.full_messages.to_sentence, status: 409
     end
   end
 
@@ -66,6 +66,6 @@ class RequestsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def request_params
-      params.require(:request).permit(:request_type, :request_status, :title, :description, :address, :longitude, :latitude, :user_id, :image)
+      params.require(:request).permit(:request_type, :request_status, :title, :description, :address, :longitude, :latitude, :user_id, :image, :fulfillment)
     end
 end
