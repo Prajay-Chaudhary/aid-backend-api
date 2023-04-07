@@ -29,7 +29,7 @@ class RequestsController < ApplicationController
     if @request.save
       render json: @request, status: :created #, location: @request
     else
-      render json: @request.errors.full_messages.to_sentence, status: 422
+      render json: @request.errors.full_messages.to_sentence, status: 409
     end
   end
 
