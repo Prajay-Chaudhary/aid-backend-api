@@ -1,0 +1,2 @@
+class Fulfillment < ApplicationRecord
+end
