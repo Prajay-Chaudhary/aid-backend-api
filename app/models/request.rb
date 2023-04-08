@@ -12,17 +12,17 @@ class Request < ApplicationRecord
 
   #update situation to fulfilled if there is a fulfillment
 
-  # def request_status
-  #   if updated_at < 24.hours.ago 
-  #     update(request_status: 'archived')
-  #     self.request_status = 'archived'
-  #   elsif fulfillments.count >= Limit
-  #     update(request_status: 'Fulfilled')
-  #     self.request_status = 'Fulfilled'
-  #   else 
-  #     self.request_status = 'Pending'
-  #   end
-  # end
+  def request_status
+    if updated_at < 24.hours.ago 
+      update(request_status: 'archived')
+      self.request_status = 'archived'
+    elsif fulfillments.count >= Limit
+      update(request_status: 'Fulfilled')
+      self.request_status = 'Fulfilled'
+    else 
+      self.request_status = 'Pending'
+    end
+  end
 
 
   #validations
