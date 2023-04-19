@@ -1,6 +1,5 @@
 class Request < ApplicationRecord
   Limit = 5
-  belongs_to :user
   has_many_attached :images
 
 
