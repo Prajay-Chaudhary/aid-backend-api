@@ -19,6 +19,7 @@ Rails.application.routes.draw do
     # your routes here
     resources :requests
     resources :fulfillments
+    resources :messages
     devise_for :users, path: '', path_names: {
       sign_in: 'login',
       sign_out: 'logout',
