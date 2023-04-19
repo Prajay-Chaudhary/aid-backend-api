@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_04_19_194326) do
+ActiveRecord::Schema[7.0].define(version: 2023_04_19_195521) do
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -53,6 +53,10 @@ ActiveRecord::Schema[7.0].define(version: 2023_04_19_194326) do
     t.string "body"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "sender_id"
+    t.integer "receiver_id"
+    t.index ["receiver_id"], name: "index_messages_on_receiver_id"
+    t.index ["sender_id"], name: "index_messages_on_sender_id"
   end
 
   create_table "requests", force: :cascade do |t|
@@ -93,5 +97,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_04_19_194326) do
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "fulfillments", "requests"
   add_foreign_key "fulfillments", "users"
+  add_foreign_key "messages", "users", column: "receiver_id"
+  add_foreign_key "messages", "users", column: "sender_id"
   add_foreign_key "requests", "users", column: "owner_id"
 end
