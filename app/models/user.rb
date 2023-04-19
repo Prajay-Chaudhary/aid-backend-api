@@ -1,5 +1,6 @@
 class User < ApplicationRecord
   before_save { self.email = email.downcase }
+  has_many :owned_requests,	class_name: "Request",	foreign_key: "owner_id"
   has_many_attached :files
 
   include Devise::JWT::RevocationStrategies::JTIMatcher
