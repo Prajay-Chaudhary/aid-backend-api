@@ -5,6 +5,6 @@ class Message < ApplicationRecord
   #method that takes in two user IDs as arguments 
   #and returns all the messages sent between those two users
   def self.conversation(user1,user2)
-    return Message.where(sender_id: user1, receiver_id: user2).or(Message.where(sender_id: user2, receiver_id: user1))
+    return Message.where(sender_id: user1, receiver_id: user2).or(Message.where(sender_id: user2, receiver_id: user1)).order(created_at: :desc)
   end
 end
