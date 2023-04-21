@@ -17,7 +17,11 @@ Rails.application.routes.draw do
 #todo remove unnesessary formats
   scope format: false do
     # your routes here
-    resources :requests
+    resources :requests do
+        collection do
+          get :my_requests
+        end
+    end
     resources :fulfillments
     resources :messages
     devise_for :users, path: '', path_names: {

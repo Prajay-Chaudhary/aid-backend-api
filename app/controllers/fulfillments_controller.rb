@@ -1,4 +1,5 @@
 class FulfillmentsController < ApplicationController
+  before_action :authenticate_user!, except: [:index, :show]
   before_action :set_fulfillment, only: %i[ show update destroy ]
 
   # GET /fulfillments
