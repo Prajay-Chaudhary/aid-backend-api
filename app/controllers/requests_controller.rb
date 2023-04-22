@@ -11,7 +11,7 @@ class RequestsController < ApplicationController
 
   #index current user requests
   def my_requests
-    @requests = current_user.requests
+    @requests = current_user.owned_requests
     render json: @requests
   end
 
@@ -24,7 +24,7 @@ class RequestsController < ApplicationController
   # POST /requests
   def create
     @request = Request.new(request_params)
-    @request.user = current_user
+    @request.owner_id = current_user.id
 
     if @request.save
       render json: @request, status: :created #, location: @request
@@ -44,7 +44,8 @@ class RequestsController < ApplicationController
 
   def update
     @request = Request.find(params[:id])
-    @request.user = current_user
+    #@request.user = current_user
+    @request.owner_id = current_user.id
     if @request.update(request_params)
       render json: @request
     else
@@ -66,6 +67,6 @@ class RequestsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def request_params
-      params.require(:request).permit(:request_type, :request_status, :title, :description, :address, :longitude, :latitude, :user_id, :image)
+      params.require(:request).permit(:request_type, :request_status, :title, :description, :address, :longitude, :latitude, :image, :owner_id)
     end
 end

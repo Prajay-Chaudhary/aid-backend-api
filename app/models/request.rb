@@ -1,6 +1,8 @@
 class Request < ApplicationRecord
   Limit = 5
   belongs_to :owner,	class_name: "User"
+  has_many :fulfillments
+  has_many :volunteers,	through: :fulfillments, source: :user
   has_many_attached :images
 
 
