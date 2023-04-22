@@ -18,7 +18,11 @@ Rails.application.routes.draw do
   scope format: false do
     # your routes here
     resources :requests
-    resources :messages
+    resources :messages do
+      collection do
+        get :my_messages
+      end
+    end
     devise_for :users, path: '', path_names: {
       sign_in: 'login',
       sign_out: 'logout',
