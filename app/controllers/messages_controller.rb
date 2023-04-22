@@ -8,6 +8,17 @@ class MessagesController < ApplicationController
     render json: @messages
   end
 
+
+    #user's all messages
+  def my_messages
+    @sent_messages = current_user.sent_messages
+    @received_messages = current_user.received_messages
+    render json: {
+      sent_messages: @sent_messages,
+      received_messages: @received_messages
+    }
+  end
+
   # GET /messages/1
   def show
     @message = Message.find(params[:id])

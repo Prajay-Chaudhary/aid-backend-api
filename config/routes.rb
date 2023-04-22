@@ -17,13 +17,17 @@ Rails.application.routes.draw do
 #todo remove unnesessary formats
   scope format: false do
     # your routes here
+    resources :messages do
+      collection do
+        get :my_messages
+      end
+    end
     resources :requests do
         collection do
           get :my_requests
         end
     end
     resources :fulfillments
-    resources :messages
     devise_for :users, path: '', path_names: {
       sign_in: 'login',
       sign_out: 'logout',
