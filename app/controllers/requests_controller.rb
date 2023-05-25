@@ -15,6 +15,13 @@ class RequestsController < ApplicationController
     render json: @requests
   end
 
+    #user who has made the request
+  def request_owner
+    @request = Request.find(params[:id])
+    @owner = @request.owner
+    render json: @owner
+  end
+
   # GET /requests/1
   def show
     @request = Request.find(params[:id])
@@ -57,6 +64,10 @@ class RequestsController < ApplicationController
   def destroy
     @request = Request.find(params[:id])
     @request.destroy
+    render json: {
+     status: 200,
+     message: 'request deleted.'
+   }, status: :ok
   end
 
   private

@@ -1,18 +1,3 @@
-# Rails.application.routes.draw do
-# #todo remove unnesessary formats
-#     resources :requests
-#     devise_for :users, path: '', path_names: {
-#       sign_in: 'login',
-#       sign_out: 'logout',
-#       registration: 'signup'
-#     },
-#     controllers: {
-#       sessions: 'users/sessions',
-#       registrations: 'users/registrations'
-#     }
-  
-# end
-
 Rails.application.routes.draw do
 #todo remove unnesessary formats
   scope format: false do
@@ -20,6 +5,7 @@ Rails.application.routes.draw do
     resources :requests do
         collection do
           get :my_requests
+          get '/request_owner', to: 'requests#request_owner'
         end
     end
     resources :fulfillments do
@@ -28,9 +14,9 @@ Rails.application.routes.draw do
       end
     end
     resources :messages do
-      collection do
-        get :my_messages
-      end
+        collection do
+          get '/conversation/:user_id', to: 'messages#conversation'
+        end
     end
     devise_for :users, path: '', path_names: {
       sign_in: 'login',

@@ -1,23 +1,26 @@
 class MessagesController < ApplicationController
   before_action :set_message, only: %i[ show update destroy ]
+  before_action :authenticate_user!
 
+
+  
   # GET /messages
   def index
-    @messages = Message.all
-
+    @messages = Message.interacted_users(current_user.id)
     render json: @messages
   end
 
 
-    #user's all messages
-  def my_messages
-    @sent_messages = current_user.sent_messages
-    @received_messages = current_user.received_messages
-    render json: {
-      sent_messages: @sent_messages,
-      received_messages: @received_messages
-    }
+  #fetch conversation between two users
+  def conversation
+    user1 = current_user.id
+    user2 = params[:user_id]
+    @messages = Message.conversation(user1, user2)
+    render json: @messages
   end
+  
+
+
 
   # GET /messages/1
   def show
@@ -28,8 +31,7 @@ class MessagesController < ApplicationController
   # POST /messages
   def create
     @message = Message.new(message_params)
-    @message.user = current_user
-    @message.fulfillment = Fulfillment.find(params[:fulfillment_id])
+    @message.sender = current_user
 
     if @message.save
       render json: @message, status: :created, location: @message
@@ -37,6 +39,7 @@ class MessagesController < ApplicationController
       render json: @message.errors, status: :unprocessable_entity
     end
   end
+
 
   # PATCH/PUT /messages/1
   def update
