@@ -2,12 +2,12 @@ class RequestsController < ApplicationController
   before_action :authenticate_user!, except: [:index, :show]
   before_action :set_request, only: %i[ show update destroy ]
 
-  # GET /requests
   def index
     @requests = Request.all
-
+    add_image_urls_to_requests
     render json: @requests
   end
+
 
   #index current user requests
   def my_requests
@@ -22,9 +22,11 @@ class RequestsController < ApplicationController
     render json: @owner
   end
 
-  # GET /requests/1
+
+
   def show
     @request = Request.find(params[:id])
+    add_image_urls_to_requests
     render json: @request
   end
 
@@ -40,18 +42,9 @@ class RequestsController < ApplicationController
     end
   end
 
-  # PATCH/PUT /requests/1
-  # def update
-  #   if @request.update(request_params)
-  #     render json: @request
-  #   else
-  #     render json: @request.errors, status: :unprocessable_entity
-  #   end
-  # end
 
   def update
     @request = Request.find(params[:id])
-    #@request.user = current_user
     @request.owner_id = current_user.id
     if @request.update(request_params)
       render json: @request
@@ -76,8 +69,17 @@ class RequestsController < ApplicationController
       @request = Request.find(params[:id])
     end
 
+    # add image url to image by fetching from activeStorage
+    def add_image_urls_to_requests
+      base_url = 'http://127.0.0.1:3001'
+      Array(@requests || @request).each do |request|
+        image_urls = request.images.map { |image| "#{base_url}#{rails_blob_path(image, disposition: 'attachment', only_path: true)}" }
+        request.image = image_urls.first if image_urls.present?
+      end
+    end
+
     # Only allow a list of trusted parameters through.
     def request_params
-      params.require(:request).permit(:request_type, :request_status, :title, :description, :address, :longitude, :latitude, :image, :owner_id)
+      params.require(:request).permit(:request_type, :request_status, :title, :description, :address, :longitude, :latitude, :images, :owner_id)
     end
 end

@@ -9,6 +9,7 @@ gem 'geocoder', '~> 1.8', '>= 1.8.1'
 gem 'activestorage-validator'
 # Bundle edge Rails instead: gem "rails", github: "rails/rails", branch: "main"
 gem "rails", "~> 7.0.4", ">= 7.0.4.2"
+gem 'activestorage'
 
 # Use sqlite3 as the database for Active Record
 gem "sqlite3", "~> 1.4"
