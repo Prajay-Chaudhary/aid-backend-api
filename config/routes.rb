@@ -2,6 +2,7 @@ Rails.application.routes.draw do
 #todo remove unnesessary formats
   scope format: false do
     # your routes here
+    resources :users
     resources :requests do
         collection do
           get :my_requests
