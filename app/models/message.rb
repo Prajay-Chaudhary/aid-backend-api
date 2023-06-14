@@ -4,12 +4,6 @@ class Message < ApplicationRecord
 
   #method that takes in two user IDs as arguments 
   #and returns all the messages sent between those two users
-  # def self.conversation(user1,user2)
-  #   return Message.where(sender_id: user1, receiver_id: user2).or(Message.where(sender_id: user2, receiver_id: user1)).order(created_at: :desc)
-  # end
-
-
-
   def self.conversation(user1, user2)
    conversations = Message.joins("INNER JOIN users ON messages.sender_id = users.id")
                           .where("(messages.sender_id = :user1 AND messages.receiver_id = :user2) OR (messages.sender_id = :user2 AND messages.receiver_id = :user1)", user1: user1, user2: user2)
@@ -41,8 +35,7 @@ class Message < ApplicationRecord
 
   #get the list of users that the current user has intracted with
   def self.interacted_users(user_id)
-      messages = Message.where(sender_id: user_id).or(Message.where(receiver_id: user_id)).distinct.order(created_at: :desc).uniq{|n| [n.sender_id,n.receiver_id].sort}
-      #messages = Message.where(sender_id: user_id).or(Message.where(receiver_id: user_id)).uniq{|n| [n.sender_id,n.receiver_id]}.order(created_at: :desc).distinct.limit(1).last      
+      messages = Message.where(sender_id: user_id).or(Message.where(receiver_id: user_id)).distinct.order(created_at: :desc).uniq{|n| [n.sender_id,n.receiver_id].sort}     
       users_messages = messages.map do |message|
         interacted_user_id = (message.sender_id == user_id) ? message.receiver_id : message.sender_id
         sent_by = (message.sender_id == user_id)? "Me" : "Other"

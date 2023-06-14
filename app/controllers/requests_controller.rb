@@ -3,7 +3,8 @@ class RequestsController < ApplicationController
   before_action :set_request, only: %i[ show update destroy ]
 
   def index
-    @requests = Request.all
+    # to get owner full_name using joins method
+    @requests = Request.joins(:owner).select('requests.*, users.first_name || " " || users.last_name AS owner_full_name')
     add_image_urls_to_requests
     render json: @requests
   end
@@ -68,6 +69,7 @@ class RequestsController < ApplicationController
     def set_request
       @request = Request.find(params[:id])
     end
+
 
     # add image url to image by fetching from activeStorage
     def add_image_urls_to_requests
