@@ -3,8 +3,8 @@ class RequestsController < ApplicationController
   before_action :set_request, only: %i[ show update destroy ]
 
   def index
-    # to get owner full_name using joins method
-    @requests = Request.joins(:owner).select('requests.*, users.first_name || " " || users.last_name AS owner_full_name')
+    # to get all the requests whose status are unfulfilled by adding owner_full_name
+    @requests = Request.joins(:owner).select('requests.*, users.first_name || " " || users.last_name AS owner_full_name').where(request_status: "unfulfilled") 
     add_image_urls_to_requests
     render json: @requests
   end
@@ -13,10 +13,28 @@ class RequestsController < ApplicationController
   #index current user requests
   def my_requests
     @requests = current_user.owned_requests
+    add_image_urls_to_requests
     render json: @requests
   end
 
-    #user who has made the request
+  def unfulfilled_requests 
+    @unfulfilled_requests = Request.where(owner_id: current_user.id, request_status: "unfulfilled")
+    add_image_urls_to_requests
+    render json: @unfulfilled_requests
+  end
+
+  def fulfilled_requests 
+    @fulfilled_requests = Request.where(owner_id: current_user.id, request_status: "fulfilled")
+    add_image_urls_to_requests
+    render json: @fulfilled_requests
+  end
+
+  def archived_requests 
+    @archived_requests = Request.where(owner_id: current_user.id, request_status: "archived")
+    add_image_urls_to_requests 
+    render json: @archived_requests
+  end
+  #user who has made the request
   def request_owner
     @request = Request.find(params[:id])
     @owner = @request.owner

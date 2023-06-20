@@ -1,11 +1,13 @@
 Rails.application.routes.draw do
-#todo remove unnesessary formats
   scope format: false do
     # your routes here
     resources :users
     resources :requests do
         collection do
           get :my_requests
+          get :fulfilled_requests
+          get :unfulfilled_requests
+          get :archived_requests
           get '/request_owner', to: 'requests#request_owner'
         end
     end
