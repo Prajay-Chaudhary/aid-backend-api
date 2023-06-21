@@ -21,17 +21,39 @@ class FulfillmentsController < ApplicationController
   end
 
   # POST /fulfillments
-  def create
-    @fulfillment = Fulfillment.new(fulfillment_params)
-    @fulfillment.user = current_user
-    @fulfillment.request = Request.find(params[:request_id])
+  # def create
+  #   @fulfillment = Fulfillment.new(fulfillment_params)
+  #   @fulfillment.user = current_user
+  #   @fulfillment.request = Request.find(params[:request_id])
 
-    if @fulfillment.save
-      render json: @fulfillment, status: :created, location: @fulfillment
+  #   if @fulfillment.save
+  #     render json: @fulfillment, status: :created, location: @fulfillment
+  #   else
+  #     render json: @fulfillment.errors, status: :unprocessable_entity
+  #   end
+  # end
+
+  #POST /fulfillments, it will check if a fulfillment object is not created for the current user then it will create a new one and save to the db else, message.
+  def create
+    @fulfillment = Fulfillment.find_by(user_id: params[:user_id])
+    if @fulfillment.nil?
+      @fulfillment = Fulfillment.new(fulfillment_params)
+      @fulfillment.user = current_user
+      @fulfillment.request = Request.find(params[:request_id])
+
+      if @fulfillment.save
+        render json: @fulfillment, status: :created, location: @fulfillment
+      else
+        render json: @fulfillment.errors, status: :unprocessable_entity
+      end
     else
-      render json: @fulfillment.errors, status: :unprocessable_entity
+      render json: {
+        status: 422,
+        message: 'A fulfillment has already been created with this user.'
+      }, status: :unprocessable_entity
     end
   end
+
 
   # PATCH/PUT /fulfillments/1
   def update
