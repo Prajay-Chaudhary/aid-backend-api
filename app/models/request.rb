@@ -14,15 +14,21 @@ class Request < ApplicationRecord
   #update situation to fulfilled if there is a fulfillment
   
 
-  def request_status
-    if updated_at < 24.hours.ago 
-      update(request_status: 'archived')
-      self.request_status = 'archived'
-    elsif fulfillments.count >= LIMIT
-      update(request_status: 'Fulfilled')
-      self.request_status = 'Fulfilled'
-    else 
-      self.request_status = 'unfulfilled'
+
+  # def request_status
+  #   if fulfillments.count >= LIMIT
+  #     update(request_status: 'Fulfilled')
+  #     self.request_status = 'Fulfilled'
+  #   else 
+  #     self.request_status = 'unfulfilled'
+  #   end
+  # end
+
+  def update_request_status
+    if fulfillments.count >= LIMIT
+      update_column(:request_status, 'fulfilled')
+    else
+      update_column(:request_status, 'unfulfilled')
     end
   end
 
