@@ -5,6 +5,15 @@ class Users::RegistrationsController < Devise::RegistrationsController
   respond_to :json
   
 
+  # send email to user after signup
+  def create
+    super do |resource|
+      if resource.persisted?
+        UserMailer.welcome_email(resource).deliver_now
+      end
+    end
+  end
+
   def respond_with(current_user, _opts = {})
     if resource.persisted?
       render json: {

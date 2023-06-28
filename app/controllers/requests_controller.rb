@@ -56,7 +56,7 @@ class RequestsController < ApplicationController
 
     if @request.save
       # Enqueue the ArchiveRequestJob to run after 2 minutes
-      ArchiveRequestJob.set(wait: 2.minutes).perform_later(@request.id)
+      ArchiveRequestJob.set(wait: 24.hours).perform_later(@request.id)
       render json: @request, status: :created #, location: @request
     else
       render json: @request.errors.full_messages.to_sentence, status: 422
