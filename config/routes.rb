@@ -28,11 +28,23 @@ Rails.application.routes.draw do
       sign_in: 'login',
       sign_out: 'logout',
       registration: 'signup'
+
     },
     controllers: {
       sessions: 'users/sessions',
-      registrations: 'users/registrations'
+      registrations: 'users/registrations',
+      passwords: 'users/passwords'
     }
+    #password update and reset link routes
+    devise_scope :user do
+      put '/password/update', to: 'users/sessions#update_password'
+      post '/users/password/reset', to: 'users/password_resets#create', as: :user_password_reset
+    end
+
+    namespace :users do
+      resources :password_resets, only: [:new, :create, :edit, :update]
+    end
+
   end
   
 end

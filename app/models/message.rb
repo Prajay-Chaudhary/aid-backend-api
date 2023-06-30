@@ -8,7 +8,7 @@ class Message < ApplicationRecord
    conversations = Message.joins("INNER JOIN users ON messages.sender_id = users.id")
                           .where("(messages.sender_id = :user1 AND messages.receiver_id = :user2) OR (messages.sender_id = :user2 AND messages.receiver_id = :user1)", user1: user1, user2: user2)
                           .select("messages.*, users.first_name, users.last_name, messages.body, messages.created_at")
-                          .order(created_at: :desc)
+                          .order(created_at: :asc)
 
 
       users_conversations = conversations.map do |conversation|
