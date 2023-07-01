@@ -8,7 +8,6 @@ class UsersController < ApplicationController
 
   def show
     @user = User.find(params[:id])
-    add_file_urls_to_users
     render json: @user
   end
 
@@ -44,16 +43,9 @@ class UsersController < ApplicationController
       @user = User.find_by_id(params[:id])  
     end
 
-    def add_file_urls_to_users
-      base_url = 'http://127.0.0.1:3001'
-      Array(@users || @user).each do |user|
-        file_urls = user.files.map { |file| "#{base_url}#{rails_blob_path(file, disposition: 'attachment', only_path: true)}" }
-        user.file = file_urls.first if file_urls.present?
-      end
-    end
 
   def user_params
-    params.require(:user).permit(:first_name, :last_name, :username, :email, :password, :files, :password_confirmation)
+    params.require(:user).permit(:first_name, :last_name, :username, :email, :password, :file)
   end
 end
 

@@ -5,7 +5,7 @@ class User < ApplicationRecord
   has_many :fulfilled_requests, through: :fulfillments, source: :request
   has_many :sent_messages, class_name: "Message", foreign_key: "sender_id"
   has_many :received_messages, class_name: "Message", foreign_key: "receiver_id"
-  has_many_attached :files
+  has_one_attached :file
 
   include Devise::JWT::RevocationStrategies::JTIMatcher
 
@@ -20,5 +20,5 @@ class User < ApplicationRecord
   validates :email, format: { with: URI::MailTo::EMAIL_REGEXP } 
   validates :username, uniqueness: true
   validates :email, uniqueness: true
-  validates :files, presence: true, blob: { content_type: ['image/png', 'image/jpg', 'image/jpeg'], size_range: 1..(5.megabytes) }
+  validates :file, presence: true, blob: { content_type: ['image/png', 'image/jpg', 'image/jpeg', 'application/pdf'], size_range: 1..(5.megabytes) }
 end
