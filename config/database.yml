@@ -37,6 +37,3 @@ test:
 production:
   <<: *default
   url: <%= ENV['DATABASE_URL'] %>
-  database: aid_backend_api_production
-  username: aid_backend_api
-  password: <%= ENV['AID_BACKEND_API_DATABASE_PASSWORD'] %>
