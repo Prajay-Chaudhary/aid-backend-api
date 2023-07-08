@@ -42,6 +42,6 @@ default: &default
 production:
   <<: *default
   url: <%= ENV['DATABASE_URL'] %>
-  database: my_app_render_production
-  username: my_app_render
-  password: <%= ENV['MY_APP_RENDER_DATABASE_PASSWORD'] %>
+  database: aid_backend_api_production
+  username: aid_backend_api
+  password: <%= ENV['AID_BACKEND_API_DATABASE_PASSWORD'] %>
