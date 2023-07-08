@@ -48,4 +48,3 @@ class UsersController < ApplicationController
     params.require(:user).permit(:first_name, :last_name, :username, :email, :password, :file)
   end
 end
-

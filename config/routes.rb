@@ -12,6 +12,7 @@ Rails.application.routes.draw do
           get :unfulfilled_requests
           get :archived_requests
           get '/request_owner', to: 'requests#request_owner'
+          get '/fulfilled-requests:id', to: 'requests#volunteer'
         end
     end
     resources :fulfillments do

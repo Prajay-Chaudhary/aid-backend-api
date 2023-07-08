@@ -1,0 +1,5 @@
+class MakeJtiColumnNullable < ActiveRecord::Migration[7.0]
+  def change
+    change_column_null :users, :jti, true
+  end
+end
