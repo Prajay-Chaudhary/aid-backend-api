@@ -10,7 +10,10 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_07_03_101918) do
+ActiveRecord::Schema[7.0].define(version: 2023_07_09_133206) do
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -40,21 +43,21 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_03_101918) do
   end
 
   create_table "fulfillments", force: :cascade do |t|
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
     t.integer "user_id", null: false
     t.integer "request_id", null: false
     t.datetime "fulfilled_time", precision: nil, default: -> { "CURRENT_TIMESTAMP" }
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.index ["request_id"], name: "index_fulfillments_on_request_id"
     t.index ["user_id"], name: "index_fulfillments_on_user_id"
   end
 
   create_table "messages", force: :cascade do |t|
     t.string "body"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
     t.integer "sender_id"
     t.integer "receiver_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.index ["receiver_id"], name: "index_messages_on_receiver_id"
     t.index ["sender_id"], name: "index_messages_on_sender_id"
   end
@@ -70,7 +73,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_03_101918) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "image"
-    t.integer "owner_id"
+    t.bigint "owner_id"
     t.index ["owner_id"], name: "index_requests_on_owner_id"
   end
 
@@ -95,9 +98,5 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_03_101918) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
-  add_foreign_key "fulfillments", "requests"
-  add_foreign_key "fulfillments", "users"
-  add_foreign_key "messages", "users", column: "receiver_id"
-  add_foreign_key "messages", "users", column: "sender_id"
   add_foreign_key "requests", "users", column: "owner_id"
 end
