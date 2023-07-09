@@ -21,7 +21,7 @@ Devise.setup do |config|
   # config.parent_controller = 'DeviseController'
 
   config.jwt do |jwt|
-    jwt.secret = Rails.application.credentials.fetch(:secret_key_base)
+    jwt.secret = '2f95edbdeac5b3cb5534eaa11ba9d869392078bb503c9c6d4d2f01893d05d787b559edfe7091321d9a735f15c0efef9fafbb93658e526fcd0fc1c1408c79b872'
     jwt.dispatch_requests = [
       ['POST', %r{^/login$}]
     ]
