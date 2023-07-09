@@ -214,6 +214,10 @@ GEM
       connection_pool (>= 2.3.0)
       rack (>= 2.2.4)
       redis-client (>= 0.14.0)
+    sqlite3 (1.6.3)
+      mini_portile2 (~> 2.8.0)
+    sqlite3 (1.6.3-arm64-darwin)
+    sqlite3 (1.6.3-x86_64-linux)
     thor (1.2.2)
     timeout (0.3.2)
     tzinfo (2.0.6)
@@ -255,6 +259,7 @@ DEPENDENCIES
   redis
   sendgrid-ruby
   sidekiq
+  sqlite3 (~> 1.4)
   tzinfo-data
 
 RUBY VERSION
