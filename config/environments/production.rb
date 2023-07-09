@@ -11,13 +11,24 @@ Rails.application.configure do
   # and those relying on copy on write to perform better.
   # Rake tasks automatically ignore this option for performance.
 
+  # config.action_mailer.delivery_method = :smtp
+  # config.action_mailer.smtp_settings = {
+  #   address: 'smtp.sendgrid.net',
+  #   port: 587,
+  #   domain: 'contact@prajaychaudhary.com',
+  #   user_name: 'apikey',
+  #   password: Rails.application.credentials.sendgrid[:api_key],
+  #   authentication: :plain,
+  #   enable_starttls_auto: true
+  # }
+
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.smtp_settings = {
     address: 'smtp.sendgrid.net',
     port: 587,
     domain: 'contact@prajaychaudhary.com',
     user_name: 'apikey',
-    password: Rails.application.credentials.sendgrid[:api_key],
+    password: Rails.application.credentials.dig(:sendgrid, :api_key),
     authentication: :plain,
     enable_starttls_auto: true
   }
