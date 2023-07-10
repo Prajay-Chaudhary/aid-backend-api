@@ -13,6 +13,8 @@ gem 'activestorage'
 gem 'redis'
 gem 'sidekiq'
 gem 'sendgrid-ruby'
+#gem 'pg'
+gem 'sqlite3'
 
 
 
@@ -47,8 +49,6 @@ gem "image_processing", "~> 1.2"
 gem "rack-cors"
 
 group :development, :test do
-  #gem "sqlite3", "~> 1.4"
-  gem 'pg'
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
   gem "debug", platforms: %i[ mri mingw x64_mingw ]
   gem 'faker'
@@ -63,7 +63,4 @@ group :development do
   gem 'letter_opener'
 end
 
-group :production do
-  gem 'pg'
-end
 
