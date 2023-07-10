@@ -14,7 +14,7 @@ gem 'redis'
 gem 'sidekiq'
 gem 'sendgrid-ruby'
 #gem 'pg'
-gem 'sqlite3'
+gem "sqlite3", "~> 1.4"
 
 
 

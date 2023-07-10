@@ -14,7 +14,7 @@ Rails.application.configure do
     port: 587,
     domain: 'contact@prajaychaudhary.com',
     user_name: 'apikey',
-    password: Rails.application.credentials.sendgrid[:api_key],
+    password: Rails.application.credentials.dig(:sendgrid, :api_key),
     authentication: :plain,
     enable_starttls_auto: true
   }
