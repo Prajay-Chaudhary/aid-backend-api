@@ -13,9 +13,22 @@ development:
   <<: *default
   database: db/development.sqlite3
 
-production:
+test:
   <<: *default
-  database: db/production.sqlite3
+  database: db/test.sqlite3
+# production:
+#   <<: *default
+#   database: db/production.sqlite3
+
+production:
+  adapter: postgresql
+  encoding: unicode
+  host: your_postgresql_host
+  port: your_postgresql_port
+  database: your_postgresql_database
+  username: your_postgresql_username
+  password: your_postgresql_password
+
 
 
 # default: &default
