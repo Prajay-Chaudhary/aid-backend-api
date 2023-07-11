@@ -11,6 +11,8 @@ class RequestsController < ApplicationController
     @requests = Request.joins(:owner)
                    .select('requests.*, users.first_name || \' \' || users.last_name AS owner_full_name')
                    .where(request_status: 'unfulfilled')
+    add_image_urls_to_requests(@requests)
+    render json: @requests
   end
 
   #to get selected request volunteers with name
