@@ -110,6 +110,6 @@ Rails.application.configure do
   # ]
 
   Rails.application.configure do
-    config.hosts << "aid-backend-api-production.up.railway.app"
+    config.hosts << "https://tranquil-springs-32726-3204834d8936.herokuapp.com"
   end
 end

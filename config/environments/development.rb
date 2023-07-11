@@ -83,6 +83,6 @@ Rails.application.configure do
   config.action_mailer.default_url_options = { host: 'localhost', port: 3001 }
 
   Rails.application.configure do
-    config.hosts << "aid-backend-api-production.up.railway.app"
+    config.hosts << "https://tranquil-springs-32726-3204834d8936.herokuapp.com"
   end
 end
