@@ -24,28 +24,26 @@ class RequestsController < ApplicationController
   #index current user requests
   def my_requests
     @requests = current_user.owned_requests
-    #add_image_urls_to_requests(@requests)
-    @image_url = @request.image.service_url if @request.image.attached?
+    add_image_urls_to_requests(@requests)
     render json: @requests
   end
 
   def unfulfilled_requests 
     @unfulfilled_requests = Request.where(owner_id: current_user.id, request_status: "unfulfilled")
-    #add_image_urls_to_requests(@unfulfilled_requests)
-    @image_url = @request.image.service_url if @request.image.attached?
+    add_image_urls_to_requests(@unfulfilled_requests)
     render json: @unfulfilled_requests
   end
 
   def fulfilled_requests 
     @fulfilled_requests = Request.where(owner_id: current_user.id, request_status: "fulfilled")
-    #add_image_urls_to_requests(@fulfilled_requests)
+    add_image_urls_to_requests(@fulfilled_requests)
     @image_url = @request.image.service_url if @request.image.attached?
     render json: @fulfilled_requests
   end
 
   def archived_requests 
     @archived_requests = Request.where(owner_id: current_user.id, request_status: "archived")
-    #add_image_urls_to_requests(@archived_requests)
+    add_image_urls_to_requests(@archived_requests)
     @image_url = @request.image.service_url if @request.image.attached?
     render json: @archived_requests
   end
@@ -60,7 +58,7 @@ class RequestsController < ApplicationController
 
   def show
     @request = Request.find(params[:id])
-    #add_image_urls_to_requests(@request)
+    add_image_urls_to_requests(@request)
     @image_url = @request.image.service_url if @request.image.attached?
     render json: @request
   end
@@ -79,16 +77,6 @@ class RequestsController < ApplicationController
     end
   end
 
-
-  # def update
-  #   @request = Request.find(params[:id])
-  #   @request.owner_id = current_user.id
-  #   if @request.update(request_params)
-  #     render json: @request
-  #   else
-  #     render json: { error: @request.errors.full_messages.to_sentence }, status: 422
-  #   end
-  # end
 
   # PATCH /requests/:id
   def update
