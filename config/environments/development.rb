@@ -82,7 +82,5 @@ Rails.application.configure do
   # config.action_cable.disable_request_forgery_protection = true
   config.action_mailer.default_url_options = { host: 'localhost', port: 3001 }
 
-  Rails.application.configure do
-    config.hosts << "aid-backend-api-production.up.railway.app"
-  end
+
 end

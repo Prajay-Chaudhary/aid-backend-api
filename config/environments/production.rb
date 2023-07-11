@@ -109,7 +109,4 @@ Rails.application.configure do
   #   "aid-backend-api-production.up.railway.app"
   # ]
 
-  Rails.application.configure do
-    config.hosts << "aid-backend-api-production.up.railway.app"
-  end
 end
