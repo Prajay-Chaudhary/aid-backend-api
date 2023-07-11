@@ -13,7 +13,8 @@ gem 'activestorage'
 gem 'redis'
 gem 'sidekiq'
 gem 'sendgrid-ruby'
-#gem 'pg'
+gem "aws-sdk-s3", require: false
+
 
 
 
