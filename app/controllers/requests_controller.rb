@@ -123,7 +123,7 @@ class RequestsController < ApplicationController
 
     # add image url to image by fetching from activeStorage
   def add_image_urls_to_requests(requests)
-    base_url = 'http://127.0.0.1:3001'
+    base_url = 'https://tranquil-springs-32726-3204834d8936.herokuapp.com'
     Array(requests).each do |request|
       image_urls = request.images.map { |image| "#{base_url}#{rails_blob_path(image, disposition: 'attachment', only_path: true)}" }
       request.image = image_urls.first if image_urls.present?
